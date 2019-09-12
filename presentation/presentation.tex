@@ -1,0 +1,252 @@
+\documentclass[hyperref={pdfpagelayout=SinglePage}, xcolor=dvipsnames, xcolor=table]{beamer} 
+
+\setbeamertemplate{enumerate items}[default]
+
+\usetheme{Berlin}                             % tema
+\usecolortheme{whale}                    % subtema
+\renewcommand\tabcolsep{4pt}		 % diminuir espaçameto entre colunas de tabelas
+\usepackage{textpos}                       % package para posicionar o logotipo do ISCTE nos slides
+\usepackage{color}                           % package para alterar as cores do template beamer
+\usepackage{wasysym}                     % package para adicionar novos simbolos ao ambiente 
+\usepackage{csquotes}                     % package para citações  
+\usepackage{wrapfig}                       % permitir imagens envolvidas em texto
+\usepackage{microtype}                   % para otimizar os espaços de texto
+\usepackage[labelfont=bf]{caption}   % título das tabelas e imagens em bold
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\newcommand{\dd}[1]{\mathrm{d}#1}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\hypersetup{pdfpagemode=FullScreen} % para o pdf abrir automaticamente em modo full screen
+\setbeamertemplate{caption}[numbered] % para numerar as tabelas
+\usepackage{subcaption}
+\usepackage[none]{hyphenat} 
+\usepackage{bm} %%% bold vectors
+\usepackage{tabularx}  
+\usepackage{tikz}
+
+
+\newcommand{\twopartdef}[4] %%%%%%%%%% permite fazer funções em ramos
+{
+	\left\{
+		\begin{array}{ll}
+			#1 & \mbox{if } #2 
+			\\ \\
+			#3 & \mbox{if } #4
+		\end{array}
+	\right.
+}
+
+\setbeamercolor{author in head/foot}{fg=White}     % cor do nome do autor no rodape
+\setbeamercolor{institute in head/foot}{fg=White}  % cor do nome do ISCTE no rodape
+\setbeamercolor{frametitle}{fg=Blue, bg=black!9} % cor da letra e do fundo da faixa com o nome de cada slide
+\setbeamercolor{caption name}{fg=Blue, bg=black!9}
+\setbeamercolor*{title}{fg=white, bg=Blue}          % cor do titulo e da caixa de titulo na capa
+\setbeamercolor{itemize item}{fg=Blue}               % cor dos bullets do ambiente \itemize 
+
+\makeatletter % criaçao de um ambiente sem TOC no cabeçalho do slide
+\newenvironment{noheadline}{
+\setbeamertemplate{headline}{}
+\addtobeamertemplate{frametitle}{\vspace*{-0.9\baselineskip}}{}
+}{}
+\makeatother
+
+\usepackage[beamer,customcolors]{hf-tikz}
+
+\tikzset{hl/.style={
+    set fill color=blue!80!black!40,
+    set border color=blue!80!black,
+  },
+}
+
+\title[Introduction GitHub]{Introduction to GitHub}
+\author[Bruno Taborda]{\textbf {Presentation for Introduction to Data Science}} 
+\titlegraphic{\includegraphics[width=10cm]{logo_1}}
+\institute[ISCTE-IUL - 26-09-2019]
+
+% position the logo
+\addtobeamertemplate{frametitle}{}{%
+\begin{textblock*}{100mm}(0.73\textwidth,-.85cm)
+\includegraphics[scale=.05]{logo_1}
+\end{textblock*}}
+
+%%%%%%%%%%%%% Ambiente de teorema/definição com as cores do ISCTE %%%%%%
+
+\makeatletter
+\def\th@mystyle{%
+    \normalfont % body font
+    \setbeamercolor{block title example}{bg=Blue,fg=white}
+    \setbeamercolor{block body example}{bg=black!9,fg=black}
+    \def\inserttheoremblockenv{exampleblock}
+  }
+\makeatother
+\theoremstyle{mystyle}
+\newtheorem*{defi}{Definition}
+
+\setbeamertemplate{defis}[numbered]
+
+
+%%%%%%%%%%%%%%%% bibliografia %%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage[
+style=authoryear,
+bibencoding=utf8, 
+minnames=1, 
+maxnames=2,
+maxbibnames=3, % I changed from 99 to 3 (por causa do Benjamin et al)
+giveninits=true,
+terseinits=true
+backref=false, 
+natbib=true, 
+dashed=false, 
+terseinits=true, 
+giveninits=true, 
+uniquename=false, 
+uniquelist=true, 
+labeldateparts=true,
+doi=false, 
+isbn=false, 
+eprint = false, % desativei. confirmar se é para manter!
+url = false, % desativei. confirmar se é para manter!
+hyperref=true, 
+natbib=true, backend=biber]{biblatex}
+
+
+\DefineBibliographyStrings{english}{
+	backrefpage = {Cited on page},
+	backrefpages = {Cited on pages},
+}
+
+% No dot before number of articles
+\usepackage{xpatch}
+\xpatchbibmacro{volume+number+eid}{\setunit*{\adddot}}{}{}{}
+
+% Remove In: for an article.
+\renewbibmacro{in:}{%
+	\ifentrytype{article}{}{%
+		\printtext{\bibstring{in}\intitlepunct}}}
+
+% Get rid of notes in citations
+%\AtEveryBibitem{\clearfield{note}}
+
+% Get rid of months in citations
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryCitekey{\clearfield{month}}
+\setlength{\parindent}{1,3cm}
+\raggedbottom
+
+\renewcommand\bibfont{\scriptsize}
+% If you have more than one page of references, you want to tell beamer
+% to put the continuation section label from the second slide onwards
+
+\setbeamertemplate{frametitle continuation}[from second]
+% Now get rid of all the colours
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+
+% No icon in references listing
+\setbeamertemplate{bibliography item}{}
+
+% Get rid of pp. in citations
+\DeclareFieldFormat{pages}{#1}
+
+% Get rid of "" in citations
+\DeclareFieldFormat[inbook]{title}{#1} 
+
+% Order like Surname, Name
+\DeclareNameAlias{author}{last-first}
+
+\bibliography{references.bib}
+
+
+\begin{document}
+
+\begin{noheadline}
+
+\begin{frame}
+\vfill
+\centering
+
+\begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{title}
+\usebeamerfont{title}\inserttitle\par%
+\ifx\insertsubtitle\@empty%
+\else%
+\vskip0.25em%
+{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+\fi%     
+\end{beamercolorbox}%
+
+\vskip1em\par
+
+\begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{author}
+\usebeamerfont{author}\insertauthor
+\end{beamercolorbox}
+
+{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+
+\begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{institute}
+\usebeamerfont{institute}\insertinstitute
+\end{beamercolorbox}
+
+
+\end{frame}
+\end{noheadline}
+
+%NUMERAÇÃO DOS SLIDES
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+%%%%%%%%%%%%%% ITEMIZE SHAPES AND COLLERS%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{itemize item}{\color{Blue}\newmoon}
+\setbeamertemplate{itemize subitem}{\color{Blue}$\blacktriangleright$}
+\setbeamertemplate{itemize subsubitem}{\color{Blue}$\blacksquare$}
+
+%%%%%%%%% TABLE OF CONTENTS SHAPES, COLLORS AND BULLETS %%%%%%%%%%%%%%%%
+
+\setbeamertemplate{section in toc}[circle]
+\setbeamercolor{section number projected}{bg=Blue,fg=white}
+
+
+\setbeamertemplate{subsection in toc}{%
+\leavevmode\leftskip=5.65ex%
+\llap{\raisebox{0.2ex}{\textcolor{structure}{\color{Blue}$\blacktriangleright$}}\kern1ex}%
+\inserttocsubsection\par%  
+}
+
+\include{IntroductionGitHub}
+
+%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%
+
+%\section[]{References}
+%\subsection{}
+%\addcontentsline{toc}{chapter}{References}
+
+\begin{frame}[allowframebreaks]{References}
+
+\printbibliography
+
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
