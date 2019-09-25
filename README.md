@@ -3,7 +3,6 @@
 ## Repository structure
 - **\bin**
 - **\presentation**
-  - **\images**: Images used in the presentation.
   - **presentation.tex**: Definition of the presentation template (beamer).
   - **IntroductionGitHub.tex**: Content of the presentation.
 
